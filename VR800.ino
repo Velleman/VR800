@@ -22,7 +22,7 @@ int angleStep = 2;
 //define our potentiometers
 int pot1 = A0; //VRx joystick 1
 int pot2 = A1; //VRy joystick 1
-int pot3 = A2; //VRx joystick 2 
+int pot3 = A2; //VRx joystick 2
 int pot4 = A3; //VRy joystick 2
 
 //variable to read the values from the analog pin (potentiometers)
@@ -37,8 +37,8 @@ void setup()
 
   pinMode(LEFT, INPUT_PULLUP); // assign pin 11 ass input for Left button
   pinMode(RIGHT, INPUT_PULLUP); // assing pin 12 as input for right button
-  pinMode(A5,INPUT_PULLUP); //center servo's pin
-  
+  pinMode(A5, INPUT_PULLUP); //center servo's pin
+
   //attaches our servos on pins PWM 11-10-9-6 to the servos
   gripper.attach(GRIPPER);
   griprot.attach(GRIPPER_ROTATION);
@@ -48,12 +48,12 @@ void setup()
   baserot.write(angle);// send servo to the middle at 70 degrees
   Serial.println("Robo ARM VR800 Velleman for Makers");
   Serial.println("Ready to Use");
-  
+
   //Centering servo's keep in loop untill pin is high
-  while(digitalRead(A5) == LOW)
+  while (digitalRead(A5) == LOW)
   {
-	gripper.write(95);
-	griprot.write(90);
+    gripper.write(95);
+    griprot.write(90);
     shoulder.write(45);
     wrist.write(180);
     baserot.write(90);
@@ -77,30 +77,30 @@ void loop()
 
   valPot3 = analogRead(pot3);
   if (valPot3 > 500 && valPot3 < 524) //check if joystick is centered, if yes then detach servo
-  {                                   //to prevent from burning out the servo.
-	if(shoulder.attached())           //You can change the values to have a more faster response on the joystick
-		shoulder.detach();
+  { //to prevent from burning out the servo.
+    if (shoulder.attached())          //You can change the values to have a more faster response on the joystick
+      shoulder.detach();
   }
   else {
-	  Serial.println(valPot3);
+    Serial.println(valPot3);
     valPot3 = map (valPot3, 0, 1023, 0, 80);
-	if(!shoulder.attached())
-		shoulder.attach(SHOULDER);
-	shoulder.write(valPot3);
+    if (!shoulder.attached())
+      shoulder.attach(SHOULDER);
+    shoulder.write(valPot3);
   }
   delay(100);
 
   valPot4 = analogRead(pot4);
   if (valPot4 > 500 && valPot4 < 524)//check if joystick is centered, if yes then detach servo
-  {                                  //to prevent from burning out the servo.
-	  if(wrist.attached())           //You can change the values to have a more faster response on the joystick
-		wrist.detach();
+  { //to prevent from burning out the servo.
+    if (wrist.attached())          //You can change the values to have a more faster response on the joystick
+      wrist.detach();
   }
   else {
-	
+
     valPot4 = map (valPot4, 0, 1023, 0, 90);
-	if(!wrist.attached())
-		wrist.attach(WRIST);
+    if (!wrist.attached())
+      wrist.attach(WRIST);
     wrist.write(valPot4);
   }
   delay(100);
