@@ -52,7 +52,7 @@ void setup()
   //Centering servo's keep in loop untill pin is high
   while(digitalRead(A5) == LOW)
   {
-	gripper.write(10);
+	gripper.write(95);
 	griprot.write(90);
     shoulder.write(45);
     wrist.write(180);
